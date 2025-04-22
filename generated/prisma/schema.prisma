@@ -1,0 +1,92 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  password  String
+  createdAt DateTime @default(now())
+}
+
+model UserRole {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+}
+
+model Book {
+  id            String   @id @default(uuid())
+  title         String
+  publishedYear Int
+  copiesTotal   Int
+  categoryId    Int
+  publisher     String
+  createdAt     DateTime @default(now())
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+}
+
+model Author {
+  id        String   @id @default(uuid())
+  name      String
+  bio       String
+  createdAt DateTime @default(now())
+}
+
+model BookAuthor {
+  id        String   @id @default(uuid())
+  name      String
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updateAt  DateTime @default(now())
+}
+
+model Loan {
+  id        String   @id @default(uuid())
+  userId    Int
+  bookId    Int
+  createdAt DateTime @default(now())
+}
+
+model Reservation {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  bookId    Int
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model ReservationStatus {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
+model statusBook {
+  id        String   @id @default(uuid())
+  bookId    Int
+  reason    String
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
